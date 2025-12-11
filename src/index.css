@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 187 100% 7%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 187 100% 7%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 187 100% 7%;
+
+    --primary: 189 79% 49%;
+    --primary-foreground: 187 100% 7%;
+
+    --secondary: 187 100% 7%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 20% 96%;
+    --muted-foreground: 187 100% 15%;
+
+    --accent: 189 79% 49%;
+    --accent-foreground: 187 100% 7%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 189 79% 49%;
+
+    --radius: 0.5rem;
+
+    /* Custom colors - exact brand colors */
+    --navy: 187 100% 7%;
+    --navy-light: 187 100% 15%;
+    --cyan: 189 79% 49%;
+    --teal: 187 100% 15%;
+    --tab-green: 145 60% 45%;
+    --tab-teal: 189 79% 49%;
+    --tab-purple: 280 60% 55%;
+    --tab-blue: 220 70% 55%;
+  }
+
+  .dark {
+    --background: 187 100% 7%;
+    --foreground: 0 0% 100%;
+
+    --card: 187 100% 10%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 187 100% 10%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 189 79% 49%;
+    --primary-foreground: 187 100% 7%;
+
+    --secondary: 187 100% 15%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 187 100% 12%;
+    --muted-foreground: 210 15% 65%;
+
+    --accent: 189 79% 49%;
+    --accent-foreground: 187 100% 7%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 187 100% 20%;
+    --input: 187 100% 20%;
+    --ring: 189 79% 49%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Corbel', 'Roboto', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent;
+  }
+}
+
+/* Stats counter animation */
+@keyframes count-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-count-up {
+  animation: count-up 0.6s ease-out forwards;
+}
+
+/* Fade in animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+/* Stagger animation delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+
+@keyframes scroll-down {
+  0% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(8px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0.7; }
+}
+
+.animate-scroll-down {
+  animation: scroll-down 1.5s ease-in-out infinite;
+}
+
+.mouse-icon {
+  width: 28px;
+  height: 44px;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(2px);
+}
+
+.mouse-wheel {
+  width: 3px;
+  height: 10px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Hero content responsive sizing for FHD and 4K */
+.hero-content {}
+
+@media (min-width: 1920px) and (max-width: 3839px) {
+  .hero-content {
+    max-width: 64rem;
+    transform: translateY(calc(4vh + 50px));
+  }
+  .hero-section {
+    padding-bottom: 1.5rem !important;
+  }
+  .hero-title {
+    font-size: 4.5rem;
+    line-height: 1.1;
+  }
+  .hero-subtitle {
+    font-size: 1.25rem;
+    max-width: 44rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-cta {
+    padding: 1.25rem 2.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 3840px) {
+  .hero-content {
+    max-width: 72rem;
+    transform: translateY(-2vh);
+  }
+  .hero-section {
+    padding-bottom: 2rem !important;
+  }
+  .hero-title {
+    font-size: 6rem;
+    line-height: 1.05;
+  }
+  .hero-subtitle {
+    font-size: 1.5rem;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-cta {
+    padding: 1.35rem 2.75rem;
+    font-size: 1rem;
+  }
+}
