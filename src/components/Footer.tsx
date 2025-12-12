@@ -1,5 +1,5 @@
-import SGPLogo from '@/assets/SGP_Logo.svg';
-import { Linkedin, Twitter } from 'lucide-react';
+import SGPLogo from '@/assets/SGP_Logo_New.png';
+import { Linkedin } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -19,16 +19,12 @@ export function Footer() {
           {/* Social Links */}
           <div className="flex items-center gap-4">
             <a
-              href="#"
+              href="https://www.linkedin.com/company/software-growth-partners/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center text-secondary-foreground/60 hover:text-primary hover:bg-primary/20 transition-colors"
             >
               <Linkedin className="w-5 h-5" />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center text-secondary-foreground/60 hover:text-primary hover:bg-primary/20 transition-colors"
-            >
-              <Twitter className="w-5 h-5" />
             </a>
           </div>
         </div>

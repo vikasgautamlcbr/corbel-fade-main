@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import SGPLogo from '@/assets/SGP_Logo.svg';
+import SGPLogo from '@/assets/SGP_Logo_New.png';
 
 const navItems = [
   { label: 'About', href: '#about' },
@@ -39,11 +39,11 @@ export function Header() {
           : 'bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-6 py-4">
+      <div className="container mx-auto px-4 md:px-6 py-3 md:py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a href="#" className="flex items-center">
-            <img src={SGPLogo} alt="Software Growth Partners" className="h-10 w-auto" />
+            <img src={SGPLogo} alt="Software Growth Partners" className="h-7 md:h-10 w-auto" />
           </a>
 
           {/* Desktop Navigation */}
@@ -59,8 +59,8 @@ export function Header() {
             ))}
             <Button
               onClick={() => scrollToSection('#contact')}
-              variant="outline"
-              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+              variant="cta"
+              className="px-4 py-2"
             >
               Get in touch
             </Button>
@@ -68,29 +68,29 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-secondary-foreground"
+            className="md:hidden text-white bg-navy/80 backdrop-blur-sm p-2 border border-white/10"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <nav className="md:hidden mt-4 pb-4 flex flex-col gap-4">
+          <nav className="md:hidden mt-4 pb-4 flex flex-col gap-2 bg-navy/95 backdrop-blur-md p-4 border border-white/10">
             {navItems.map((item) => (
               <button
                 key={item.label}
                 onClick={() => scrollToSection(item.href)}
-                className="text-secondary-foreground/90 hover:text-primary transition-colors font-medium text-left"
+                className="text-white/90 hover:text-primary hover:bg-white/5 transition-colors font-medium text-left py-2 px-3"
               >
                 {item.label}
               </button>
             ))}
             <Button
               onClick={() => scrollToSection('#contact')}
-              variant="outline"
-              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground w-fit"
+              variant="cta"
+              className="px-4 py-2 w-full mt-2"
             >
               Get in touch
             </Button>

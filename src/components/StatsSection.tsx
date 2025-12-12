@@ -37,7 +37,26 @@ export function StatsSection() {
   return (
     <section ref={ref} className="bg-navy-light py-12 md:py-16">
       <div className="container mx-auto px-6">
-        <div className="flex flex-wrap justify-center md:justify-between items-center">
+        {/* Mobile: 2x2 grid */}
+        <div className="grid grid-cols-2 gap-6 md:hidden">
+          {stats.map((stat) => (
+            <div
+              key={stat.label}
+              className="flex flex-col items-center text-center py-4 border-b border-primary/20 last:border-b-0 [&:nth-child(odd)]:border-r [&:nth-child(odd)]:border-r-primary/20"
+            >
+              <StatItem
+                value={stat.value}
+                prefix={stat.prefix}
+                suffix={stat.suffix}
+                label={stat.label}
+                isVisible={isVisible}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop: horizontal row */}
+        <div className="hidden md:flex flex-wrap justify-center md:justify-between items-center">
           {stats.map((stat, index) => (
             <div
               key={stat.label}
