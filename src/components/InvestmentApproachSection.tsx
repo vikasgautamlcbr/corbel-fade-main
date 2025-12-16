@@ -1,6 +1,6 @@
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { ArrowRight, ArrowDown } from 'lucide-react';
 import leftToRight from '@/assets/Left to right (1).mp4';
 
 const metrics = [
@@ -39,6 +39,26 @@ const process = [
 export function InvestmentApproachSection() {
   const { ref, isVisible } = useScrollAnimation(0.5);
   const [activeTab, setActiveTab] = useState<'metrics' | 'characteristics' | 'sectors'>('metrics');
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [mobileScale, setMobileScale] = useState(2);
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 1024 : true);
+
+  useEffect(() => {
+    const update = () => {
+      setIsMobile(window.innerWidth < 1024);
+      const el = boxRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      const aspectRotated = 9 / 16;
+      const needed = width > 0 ? Math.max(height / (width * aspectRotated), 1) : 1;
+      setMobileScale(needed * 1.05);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   return (
     <section id="approach" ref={ref} className="relative bg-black overflow-hidden site-section">
@@ -112,6 +132,8 @@ export function InvestmentApproachSection() {
                     <button
                       key={tab.id}
                       onMouseEnter={() => setActiveTab(tab.id as 'metrics' | 'characteristics' | 'sectors')}
+                      onClick={() => setActiveTab(tab.id as 'metrics' | 'characteristics' | 'sectors')}
+                      onTouchStart={() => setActiveTab(tab.id as 'metrics' | 'characteristics' | 'sectors')}
                       className={`px-3 py-3 text-xs md:text-sm font-medium transition-all rounded-none border ${
                         activeTab === tab.id
                           ? 'bg-[#00FFFF] text-black border-[#00FFFF]'
@@ -201,7 +223,7 @@ export function InvestmentApproachSection() {
                   We understand that investment processes can be distracting for critical management team members. Therefore, we have designed a process that ensures minimal distraction and quick decision making.
                 </p>
               </div>
-              <div className="relative border border-white/10 rounded-none p-6 min-h-[140px] lg:min-h-[160px] flex items-center w-full overflow-hidden">
+              <div ref={boxRef} className="relative border border-white/10 rounded-none p-6 min-h-[140px] lg:min-h-[160px] flex items-center w-full overflow-hidden">
                 <video
                   src={leftToRight}
                   autoPlay
@@ -209,12 +231,13 @@ export function InvestmentApproachSection() {
                   loop
                   playsInline
                   className="absolute inset-0 w-full h-full object-cover opacity-20"
+                  style={{ transformOrigin: 'center', transform: isMobile ? `rotate(90deg) scale(${mobileScale})` : 'rotate(0)' }}
                   aria-hidden="true"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" aria-hidden="true" />
-                <div className="w-full relative z-10 flex flex-wrap lg:flex-nowrap justify-center items-center gap-6">
+                <div className="absolute inset-0 md:bg-gradient-to-r bg-gradient-to-b from-black/30 via-transparent to-black/30" aria-hidden="true" />
+                <div className="w-full relative z-10 flex flex-col lg:flex-row lg:flex-nowrap justify-center items-center gap-6">
                   {process.map((step, idx) => (
-                    <div key={idx} className="flex items-center gap-3 md:gap-4">
+                    <div key={idx} className="flex lg:flex-row flex-col items-center gap-3 md:gap-4">
                       <div className="flex flex-col items-center text-center justify-center min-h-[120px] md:min-h-[140px]">
                         <div className="step-shimmer relative overflow-hidden px-2.5 py-0.5 text-[11px] md:text-xs font-semibold border border-white/25 rounded-none text-white/80">
                           <span className="relative z-10">{`Step ${idx + 1}`}</span>
@@ -227,11 +250,18 @@ export function InvestmentApproachSection() {
                         )}
                       </div>
                       {idx !== process.length - 1 && (
-                        <div className="flex-none w-16 sm:w-20 md:w-24 lg:w-28 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
-                          <span className="h-px bg-white/15 w-full" />
-                          <ArrowRight className="w-4 h-4 text-white/50 justify-self-center" />
-                          <span className="h-px bg-white/15 w-full" />
-                        </div>
+                        <>
+                          <div className="hidden lg:grid flex-none w-16 sm:w-20 md:w-24 lg:w-28 grid-cols-[1fr_auto_1fr] items-center gap-2">
+                            <span className="h-px bg-white/15 w-full" />
+                            <ArrowRight className="w-4 h-4 text-white/50 justify-self-center" />
+                            <span className="h-px bg-white/15 w-full" />
+                          </div>
+                          <div className="flex lg:hidden flex-col items-center">
+                            <span className="w-px h-6 bg-white/15" />
+                            <ArrowDown className="w-4 h-4 text-white/50 my-1" />
+                            <span className="w-px h-6 bg-white/15" />
+                          </div>
+                        </>
                       )}
                     </div>
                   ))}

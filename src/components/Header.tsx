@@ -5,6 +5,7 @@ import SGPLogo from '@/assets/SGP_Logo_New.png';
 
 const navItems = [
   { label: 'About', href: '#about' },
+  { label: 'Our Approach', href: '#approach' },
   { label: 'Portfolio', href: '#portfolio' },
   { label: 'Team', href: '#team' },
   { label: 'Contact', href: '#contact' },

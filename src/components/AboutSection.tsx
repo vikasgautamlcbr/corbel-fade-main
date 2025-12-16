@@ -62,7 +62,7 @@ const ExpandablePanels = () => {
             />
           )}
 
-          <div className="relative z-10 flex items-center justify-between px-8 md:px-12 py-8">
+          <div className="relative z-10 flex items-center justify-between px-4 md:px-12 py-8">
             <div className="flex items-center gap-8 md:gap-16">
               <span
                 className={cn(
@@ -102,10 +102,10 @@ const ExpandablePanels = () => {
           </div>
 
           <div
-            className={cn('overflow-hidden transition-all duration-700 ease-out', activeIndex === index ? 'max-h-48' : 'max-h-0')}
+            className={cn('overflow-hidden transition-all duration-700 ease-out', activeIndex === index ? 'max-h-60 md:max-h-48' : 'max-h-0')}
           >
-            <div className="pr-8 md:pr-12 pb-10 pl-32 md:pl-52">
-              <p className="text-gray-400 text-lg leading-relaxed max-w-3xl">{item.content}</p>
+            <div className="pr-4 md:pr-12 pb-8 pl-4 md:pl-52">
+              <p className="text-gray-400 text-sm md:text-lg leading-relaxed max-w-full md:max-w-3xl">{item.content}</p>
             </div>
           </div>
 

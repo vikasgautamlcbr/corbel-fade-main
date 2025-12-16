@@ -69,18 +69,10 @@ type ColumnType = 'current' | 'prior' | 'addon' | null;
 export function PortfolioSection() {
   const [hoveredColumn, setHoveredColumn] = useState<ColumnType>(null);
   const [hoveredCompany, setHoveredCompany] = useState<Company | null>(null);
-  const [mobileFilter, setMobileFilter] = useState<ColumnType>(null);
   const {
     ref,
     isVisible
   } = useScrollAnimation(0.85);
-
-  const getMobileCompanies = () => {
-    if (mobileFilter === 'current') return currentInvestments;
-    if (mobileFilter === 'prior') return priorInvestments;
-    if (mobileFilter === 'addon') return addons;
-    return [...currentInvestments, ...priorInvestments, ...addons];
-  };
 
   return <section id="portfolio" ref={ref} className="relative bg-black overflow-hidden site-section">
       {/* Background overlay */}
@@ -136,48 +128,11 @@ export function PortfolioSection() {
                 <p className="text-white/80 text-lg">Add-ons</p>
               </div>
             </div>
-
-            {/* Mobile Filter Tabs */}
-            <div className="lg:hidden flex flex-col gap-2">
-              <button
-                onClick={() => setMobileFilter(mobileFilter === 'current' ? null : 'current')}
-                className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all ${
-                  mobileFilter === 'current' 
-                    ? 'bg-[#00FFFF] text-black' 
-                    : 'bg-white/10 text-white/80 border border-white/20'
-                }`}
-              >
-                <span className="text-lg font-bold">{currentInvestments.length}</span>
-                <span>Current Investments</span>
-              </button>
-              <button
-                onClick={() => setMobileFilter(mobileFilter === 'prior' ? null : 'prior')}
-                className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all ${
-                  mobileFilter === 'prior' 
-                    ? 'bg-white text-black' 
-                    : 'bg-white/10 text-white/80 border border-white/20'
-                }`}
-              >
-                <span className="text-lg font-bold">{priorInvestments.length}</span>
-                <span>Prior Investments</span>
-              </button>
-              <button
-                onClick={() => setMobileFilter(mobileFilter === 'addon' ? null : 'addon')}
-                className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all ${
-                  mobileFilter === 'addon' 
-                    ? 'bg-white/70 text-black' 
-                    : 'bg-white/10 text-white/80 border border-white/20'
-                }`}
-              >
-                <span className="text-lg font-bold">{addons.length}</span>
-                <span>Add-ons</span>
-              </button>
-            </div>
           </div>
 
           {/* Right Side - Three Column Layout (Desktop) / Horizontal Rows (Mobile) */}
           <div
-            className={`hidden lg:flex justify-center items-stretch gap-2 md:gap-3 h-[500px] transition-all duration-700 ${
+            className={`flex justify-center items-stretch gap-2 md:gap-3 h-[500px] transition-all duration-700 ${
               isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-10'
             }`}
             style={{ transitionDelay: '250ms' }}
@@ -188,16 +143,6 @@ export function PortfolioSection() {
             <LogoColumn title="Current" companies={currentInvestments} color="teal" direction="down" columnType="current" hoveredColumn={hoveredColumn} setHoveredColumn={setHoveredColumn} hoveredCompany={hoveredCompany} setHoveredCompany={setHoveredCompany} size="large" />
             {/* Add-ons - Right */}
             <LogoColumn title="Add-ons" companies={addons} color="white" direction="up" columnType="addon" hoveredColumn={hoveredColumn} setHoveredColumn={setHoveredColumn} hoveredCompany={hoveredCompany} setHoveredCompany={setHoveredCompany} size="small" />
-          </div>
-
-          {/* Mobile Layout - Marquee style continuous scroll */}
-          <div
-            className={`lg:hidden transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-            style={{ transitionDelay: '300ms' }}
-          >
-            <MobileMarquee companies={getMobileCompanies()} key={mobileFilter || 'all'} />
           </div>
         </div>
       </div>
@@ -279,7 +224,7 @@ function LogoColumn({
       `} onMouseEnter={() => setHoveredColumn(columnType)} onMouseLeave={() => {
     setHoveredColumn(null);
     setHoveredCompany(null);
-  }}>
+  }} onClick={() => setHoveredColumn(isHovered ? null : columnType)} onTouchStart={() => setHoveredColumn(columnType)}>
       {/* Column Label */}
       <div className="py-4 px-2 text-center">
         <h3 className={`font-semibold text-sm md:text-base ${styles.text}`}>{title}</h3>
@@ -345,8 +290,12 @@ function LogoCard({
   };
   return <div 
     className="mx-3 relative group cursor-pointer" 
+    role="button"
+    tabIndex={0}
     onMouseEnter={() => onHover(company)} 
     onMouseLeave={() => onHover(null)}
+    onClick={() => onHover(isHovered ? null : company)}
+    onTouchStart={() => onHover(company)}
   >
       {/* Logo Container */}
       <div className={`bg-white p-2 border-2 transition-all duration-200
@@ -355,46 +304,4 @@ function LogoCard({
         <img src={company.logo} alt={company.name} className={`w-full object-contain ${logoHeights[size]}`} />
       </div>
     </div>;
-}
-
-// Mobile marquee - continuous horizontal scroll
-function MobileMarquee({ companies }: { companies: Company[] }) {
-  // Triple the companies for seamless loop
-  const tripled = [...companies, ...companies, ...companies];
-  
-  return (
-    <div className="relative overflow-hidden py-2">
-      {/* Gradient masks */}
-      <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
-      
-      <div 
-        className="flex gap-4"
-        style={{
-          animation: 'mobile-marquee 12s linear infinite',
-          width: 'max-content'
-        }}
-      >
-        {tripled.map((company, index) => (
-          <div 
-            key={`${company.name}-${index}`}
-            className="flex-shrink-0 bg-white p-3 w-24 h-16 flex items-center justify-center"
-          >
-            <img 
-              src={company.logo} 
-              alt={company.name} 
-              className="w-full h-full object-contain"
-            />
-          </div>
-        ))}
-      </div>
-      
-      <style>{`
-        @keyframes mobile-marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-33.333%); }
-        }
-      `}</style>
-    </div>
-  );
 }

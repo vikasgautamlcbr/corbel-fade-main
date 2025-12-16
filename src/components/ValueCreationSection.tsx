@@ -154,6 +154,36 @@ export function ValueCreationSection() {
                           setNextTab(null);
                         }, 40);
                       }}
+                      onClick={() => {
+                        const next = tab.id as 'owners' | 'intermediaries';
+                        if (next === activeTab || isSwitching) return;
+                        setTabsHovered(true);
+                        setNextTab(next);
+                        setIsSwitching(true);
+                        setReveal(false);
+                        window.setTimeout(() => {
+                          setActiveTab(next);
+                          setActiveIndex(0);
+                          setReveal(true);
+                          setIsSwitching(false);
+                          setNextTab(null);
+                        }, 40);
+                      }}
+                      onTouchStart={() => {
+                        const next = tab.id as 'owners' | 'intermediaries';
+                        if (next === activeTab || isSwitching) return;
+                        setTabsHovered(true);
+                        setNextTab(next);
+                        setIsSwitching(true);
+                        setReveal(false);
+                        window.setTimeout(() => {
+                          setActiveTab(next);
+                          setActiveIndex(0);
+                          setReveal(true);
+                          setIsSwitching(false);
+                          setNextTab(null);
+                        }, 40);
+                      }}
                       className="relative px-3 py-2 text-sm font-medium rounded-none border"
                       aria-pressed={activeTab === tab.id}
                       style={{
@@ -224,6 +254,8 @@ export function ValueCreationSection() {
                     />
                     <button
                       onMouseEnter={() => setActiveIndex(idx)}
+                      onClick={() => setActiveIndex(idx)}
+                      onTouchStart={() => setActiveIndex(idx)}
                       className="inline-flex items-center text-left py-1 transition hover:translate-x-0.5 duration-200"
                     >
                       <span
