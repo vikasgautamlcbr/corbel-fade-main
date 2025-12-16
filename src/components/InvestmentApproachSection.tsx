@@ -87,25 +87,25 @@ export function InvestmentApproachSection() {
       `}</style>
 
       <div className="section-container relative z-10">
-        <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`transition-all duration-700 ${(isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,35%)_minmax(0,65%)] gap-8 items-start">
-            <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+            <div className={`transition-all duration-700 ${(isVisible || isMobile) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
               <div className="text-left mb-10">
                 <p
                   className={`section-eyebrow mb-4 transition-all duration-500 ease-out ${
-                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                    (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                   }`}
                   style={{ transitionDelay: '100ms' }}
                 >Investment Approach</p>
                 <h2
                   className={`section-title mb-6 transition-all duration-500 ease-out ${
-                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                    (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                   }`}
                   style={{ transitionDelay: '150ms' }}
                 >Criteria & Process</h2>
                 <p
                   className={`section-body max-w-3xl transition-all duration-500 ease-out ${
-                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                    (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                   }`}
                   style={{ transitionDelay: '200ms' }}
                 >
@@ -115,10 +115,10 @@ export function InvestmentApproachSection() {
               
             </div>
 
-            <div className={`transition-all duration-700 min-w-0 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+            <div className={`transition-all duration-700 min-w-0 ${(isVisible || isMobile) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
               <div
                 className={`transition-all duration-500 ease-out ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
                 style={{ transitionDelay: '300ms' }}
               >
@@ -155,7 +155,7 @@ export function InvestmentApproachSection() {
                         <div
                           key={m.label}
                           className={`text-left transition-all duration-300 ease-out ${
-                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                            (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
                           }`}
                           style={{ transitionDelay: `${idx * 80}ms` }}
                         >
@@ -175,7 +175,7 @@ export function InvestmentApproachSection() {
                         <div
                           key={c}
                           className={`w-fit px-4 py-1.5 border border-white/20 text-white/80 text-sm md:text-base rounded-none leading-snug transition-all duration-300 ease-out ${
-                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                            (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
                           }`}
                           style={{ transitionDelay: `${idx * 80}ms` }}
                         >
@@ -194,7 +194,7 @@ export function InvestmentApproachSection() {
                         <div
                           key={s}
                           className={`w-fit px-4 py-1.5 border border-white/20 text-white/80 text-sm md:text-base rounded-none leading-snug transition-all duration-300 ease-out ${
-                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                            (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
                           }`}
                           style={{ transitionDelay: `${idx * 70}ms` }}
                         >
@@ -213,7 +213,7 @@ export function InvestmentApproachSection() {
           <div className="mt-16">
             <div
               className={`w-full transition-all duration-500 ease-out ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
               style={{ transitionDelay: '400ms' }}
             >
