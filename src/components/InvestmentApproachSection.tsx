@@ -37,7 +37,7 @@ const process = [
 
 
 export function InvestmentApproachSection() {
-  const { ref, isVisible } = useScrollAnimation(0.5);
+  const { ref, isVisible } = useScrollAnimation(0.25);
   const [activeTab, setActiveTab] = useState<'metrics' | 'characteristics' | 'sectors'>('metrics');
   const boxRef = useRef<HTMLDivElement>(null);
   const [mobileScale, setMobileScale] = useState(2);
