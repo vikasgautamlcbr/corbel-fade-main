@@ -37,22 +37,26 @@ export function StatsSection() {
   return (
     <section ref={ref} className="bg-black py-12 md:py-16 snap-start">
       <div className="container mx-auto px-6">
-        {/* Mobile: 2x2 grid */}
-        <div className="grid grid-cols-2 gap-6 md:hidden">
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="flex flex-col items-center text-center py-4 border-b border-primary/20 last:border-b-0 [&:nth-child(odd)]:border-r [&:nth-child(odd)]:border-r-primary/20"
-            >
-              <StatItem
-                value={stat.value}
-                prefix={stat.prefix}
-                suffix={stat.suffix}
-                label={stat.label}
-                isVisible={isVisible}
-              />
-            </div>
-          ))}
+        {/* Mobile: 2x2 grid with single vertical + horizontal dividers */}
+        <div className="relative md:hidden">
+          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-primary/20 pointer-events-none" />
+          <div className="absolute top-1/2 left-0 right-0 h-px bg-primary/20 pointer-events-none" />
+          <div className="grid grid-cols-2">
+            {stats.map((stat) => (
+              <div
+                key={stat.label}
+                className="flex flex-col items-center text-center py-6"
+              >
+                <StatItem
+                  value={stat.value}
+                  prefix={stat.prefix}
+                  suffix={stat.suffix}
+                  label={stat.label}
+                  isVisible={isVisible}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Desktop: equal-width grid with consistent separators */}
