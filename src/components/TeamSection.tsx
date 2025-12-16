@@ -75,15 +75,18 @@ function PopCard({
       className="relative cursor-pointer"
       style={{
         zIndex: isHovered ? 50 : 1,
-        width: isHovered ? '280px' : '200px',
-        transition: 'width 400ms cubic-bezier(0.4, 0, 0.2, 1), z-index 0ms',
+        width: '220px',
+        transform: isHovered ? 'scale(1.04)' : 'scale(1)',
+        willChange: 'transform',
+        transition: 'transform 250ms cubic-bezier(0.4, 0, 0.2, 1), z-index 0ms',
+        contentVisibility: 'auto',
       }}
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
     >
       <div 
         className={`relative overflow-hidden bg-gradient-to-b from-[#0c1c3d] to-[#081428] h-full ${
-          isHovered ? 'shadow-2xl shadow-[#00FFFF]/30' : ''
+          isHovered ? 'shadow-xl shadow-[#00FFFF]/20' : ''
         }`}
         style={{
           transition: 'box-shadow 400ms cubic-bezier(0.4, 0, 0.2, 1)',
@@ -106,6 +109,9 @@ function PopCard({
               transform: isHovered ? 'scale(1.05)' : 'scale(1)',
               transition: 'transform 400ms cubic-bezier(0.4, 0, 0.2, 1)',
             }}
+            loading="lazy"
+            decoding="async"
+            fetchpriority="low"
           />
           
           {/* LinkedIn button */}
@@ -125,20 +131,12 @@ function PopCard({
           
           <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
             <h3 
-              className="font-bold text-white mb-1"
-              style={{
-                fontSize: isHovered ? '1.125rem' : '0.875rem',
-                transition: 'font-size 400ms cubic-bezier(0.4, 0, 0.2, 1)',
-              }}
+              className="font-bold text-white mb-1 text-sm"
             >
               {member.name}
             </h3>
             <p 
-              className="text-[#00FFFF] font-medium"
-              style={{
-                fontSize: isHovered ? '0.875rem' : '0.75rem',
-                transition: 'font-size 400ms cubic-bezier(0.4, 0, 0.2, 1)',
-              }}
+              className="text-[#00FFFF] font-medium text-xs"
             >
               {member.role}
             </p>
@@ -179,7 +177,7 @@ function PopCard({
 }
 
 export function TeamSection() {
-  const { ref, isVisible } = useScrollAnimation(0.85);
+  const { ref, isVisible } = useScrollAnimation(0.6);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [expandedMobileIndex, setExpandedMobileIndex] = useState<number | null>(null);
 
@@ -187,7 +185,7 @@ export function TeamSection() {
     <section
       id="team"
       ref={ref}
-      className="relative bg-black py-20 md:py-28 overflow-hidden snap-start"
+      className="relative bg-black overflow-hidden site-section"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -210,13 +208,13 @@ export function TeamSection() {
         >
           {/* Header */}
           <div className="text-center mb-16 px-6">
-            <p className="text-[#00FFFF] font-medium tracking-wider uppercase text-sm mb-4">
+            <p className="section-eyebrow mb-4">
               The People Behind SGP
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            <h2 className="section-title mb-6">
               Meet the Team
             </h2>
-            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="section-body max-w-2xl mx-auto">
               A diverse team of investors, operators, and technologists united by a shared 
               passion for building exceptional software companies.
             </p>
@@ -266,6 +264,9 @@ export function TeamSection() {
                               transform: isExpanded ? 'scale(1.05)' : 'scale(1)',
                               transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)' 
                             }}
+                            loading="lazy"
+                            decoding="async"
+                            fetchpriority="low"
                           />
                           <div 
                             className="absolute bottom-0 left-0 right-0 p-3 z-20"

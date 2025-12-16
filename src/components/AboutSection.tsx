@@ -127,8 +127,8 @@ export function AboutSection() {
   const { ref, isVisible } = useScrollAnimation(0.5);
 
   return (
-    <section id="about" ref={ref} className="bg-black py-16 md:py-24 snap-start">
-      <div className="container mx-auto px-6">
+    <section id="about" ref={ref} className="bg-black site-section">
+      <div className="section-container">
         <div
           className={`grid grid-cols-1 md:grid-cols-2 transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -136,13 +136,28 @@ export function AboutSection() {
         >
         <div className="px-6 md:px-6 md:col-span-2">
           <div className="mb-10 text-center">
-            <p className={`text-[#00FFFF] font-medium tracking-wider uppercase text-sm mb-4 ${isVisible ? 'animate-fade-in-up delay-100' : ''}`}>
+            <p
+              className={`section-eyebrow mb-4 transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '100ms' }}
+            >
               Driven by Purpose
             </p>
-            <h2 className={`text-3xl md:text-4xl font-bold text-white mb-6 ${isVisible ? 'animate-fade-in-up delay-150' : ''}`}>
+            <h2
+              className={`section-title mb-6 transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '150ms' }}
+            >
               Committed to Building Enduring Software Leaders
             </h2>
-            <p className={`text-muted-foreground text-base md:text-lg leading-relaxed ${isVisible ? 'animate-fade-in-up delay-200' : ''}`}>
+            <p
+              className={`section-body transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '200ms' }}
+            >
               Software Growth Partners' (SGP's) primary mission is to build great software companies. We do this by being very selective about
               where we invest, and being very engaged in where we do invest. Unlike traditional private equity approach, we engage with our
               portfolio companies as true partners with only one goal: To help them achieve their true potential. In order to achieve its mission,
@@ -150,7 +165,12 @@ export function AboutSection() {
             </p>
           </div>
 
-          <div className={`${isVisible ? 'animate-fade-in-up delay-250' : ''}`}>
+          <div
+            className={`transition-all duration-500 ease-out ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+            style={{ transitionDelay: '250ms' }}
+          >
             <ExpandablePanels />
           </div>
         </div>

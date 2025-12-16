@@ -105,6 +105,25 @@
   }
 }
 
+@layer components {
+  .section-container {
+    @apply container mx-auto px-6;
+  }
+  .site-section {
+    @apply py-16 md:py-24 snap-start;
+  }
+  .section-eyebrow {
+    @apply font-medium tracking-wider uppercase text-sm;
+    color: hsl(var(--cyan));
+  }
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-white;
+  }
+  .section-body {
+    @apply text-muted-foreground text-base md:text-lg leading-relaxed;
+  }
+}
+
 /* Stats counter animation */
 @keyframes count-up {
   from {

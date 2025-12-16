@@ -1,6 +1,6 @@
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { ArrowRight } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useRef } from 'react';
 
 const owners = [
   {
@@ -60,13 +60,17 @@ export function ValueCreationSection() {
   const { ref, isVisible } = useScrollAnimation(0.85);
   const [activeTab, setActiveTab] = useState<'owners' | 'intermediaries'>('owners');
   const [activeIndex, setActiveIndex] = useState(0);
-  const [tabsHovered, setTabsHovered] = useState(false);
+  const [tabsHovered, setTabsHovered] = useState(true);
+  const [reveal, setReveal] = useState(true);
+  const listRef = useRef<HTMLUListElement>(null);
+  const [isSwitching, setIsSwitching] = useState(false);
+  const [nextTab, setNextTab] = useState<'owners' | 'intermediaries' | null>(null);
 
   const icons = useMemo(() => {
-    return import.meta.glob('/src/assets/icons/*.svg', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
+    return import.meta.glob('/src/assets/icons/*.svg', { eager: true, as: 'raw' }) as Record<string, string>;
   }, []);
 
-  const getIconUrl = (title: string) => {
+  const getIconRaw = (title: string) => {
     const key = `/src/assets/icons/${title}.svg`;
     return icons[key];
   };
@@ -76,32 +80,59 @@ export function ValueCreationSection() {
       <div className="absolute inset-0 bg-black" />
       <div className="absolute inset-0 bg-black/30" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="section-container relative z-10">
         <style>{`
           @keyframes numberPop {
             0% { transform: translateY(8px) scale(0.96); opacity: 0; }
             100% { transform: translateY(0) scale(1); opacity: 1; }
           }
-          .number-animate { animation: numberPop 260ms ease-out; }
+          .number-animate { animation: numberPop 260ms ease-out both; will-change: transform, opacity; backface-visibility: hidden; }
           @keyframes fadeUp {
             0% { transform: translateY(6px); opacity: 0; }
             100% { transform: translateY(0); opacity: 1; }
           }
-          .fade-up { animation: fadeUp 220ms ease-out; }
+          .fade-up { animation: fadeUp 220ms ease-out both; will-change: transform, opacity; backface-visibility: hidden; }
         `}</style>
         <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch">
             <div className="md:px-0 md:order-2 order-1 md:self-stretch">
               <div className="text-left mb-10">
-                <p className={`font-medium tracking-wider uppercase text-sm mb-4 text-[#00FFFF] ${isVisible ? 'animate-fade-in-up delay-100' : ''}`}>Value Creation</p>
-                <h2 className={`text-3xl md:text-4xl font-bold text-white mb-6 ${isVisible ? 'animate-fade-in-up delay-150' : ''}`}>Partnering for Lasting Outcomes</h2>
-                <p className={`text-muted-foreground text-base md:text-lg max-w-3xl leading-relaxed ${isVisible ? 'animate-fade-in-up delay-200' : ''}`}>
+                <p
+                  className={`section-eyebrow mb-4 transition-all duration-500 ease-out ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionDelay: '100ms' }}
+                >Value Creation</p>
+                <h2
+                  className={`section-title mb-6 transition-all duration-500 ease-out ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionDelay: '150ms' }}
+                >Partnering for Lasting Outcomes</h2>
+                <p
+                  className={`section-body max-w-3xl transition-all duration-500 ease-out ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionDelay: '200ms' }}
+                >
                   We focus on building enduring software leaders by delivering value to both owners and intermediaries—through growth, flexibility, and an efficient process.
                 </p>
               </div>
 
               <div className="mb-6">
-                <div className={`flex items-center gap-6 ${isVisible ? 'animate-fade-in-up delay-250' : ''}`}>
+                <div
+                  className={`flex items-center gap-6 transition-all duration-500 ease-out ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{
+                    transitionDelay: '250ms',
+                    opacity: reveal ? 1 : 0,
+                    transition: reveal ? 'opacity 160ms ease-out' : 'none',
+                    pointerEvents: isSwitching ? 'none' : 'auto',
+                    willChange: 'opacity',
+                    backfaceVisibility: 'hidden',
+                  }}
+                >
                   {[
                     { id: 'owners', label: 'For Owners' },
                     { id: 'intermediaries', label: 'For Intermediaries' },
@@ -109,23 +140,85 @@ export function ValueCreationSection() {
                     <button
                       key={tab.id}
                       onMouseEnter={() => {
-                        setActiveTab(tab.id as 'owners' | 'intermediaries');
-                        setActiveIndex(0);
+                        const next = tab.id as 'owners' | 'intermediaries';
+                        if (next === activeTab || isSwitching) return;
                         setTabsHovered(true);
+                        setNextTab(next);
+                        setIsSwitching(true);
+                        setReveal(false);
+                        window.setTimeout(() => {
+                          setActiveTab(next);
+                          setActiveIndex(0);
+                          setReveal(true);
+                          setIsSwitching(false);
+                          setNextTab(null);
+                        }, 40);
                       }}
-                      className={`px-3 py-2 text-sm font-medium rounded-none border border-white/20 ${
-                        activeTab === tab.id ? 'bg-[#0c1c3d] text-white' : 'bg-white/10 text-white/80 hover:bg-white/15'
-                      }`}
+                      className="relative px-3 py-2 text-sm font-medium rounded-none border"
+                      aria-pressed={activeTab === tab.id}
+                      style={{
+                        transition: 'background-color 120ms ease-out, border-color 120ms ease-out, color 120ms ease-out',
+                        backfaceVisibility: 'hidden',
+                        pointerEvents: isSwitching ? 'none' : 'auto',
+                        backgroundColor:
+                          reveal && activeTab === tab.id ? '#00FFFF' : 'rgba(255,255,255,0.10)',
+                        borderColor:
+                          reveal && activeTab === tab.id ? '#00FFFF' : 'rgba(255,255,255,0.20)',
+                      }}
                     >
-                      {tab.label}
+                      <span
+                        className="relative z-10"
+                        style={{ color: reveal && activeTab === tab.id ? '#000000' : 'rgba(255,255,255,0.8)' }}
+                      >
+                        {tab.label}
+                      </span>
+                      <div
+                        className="absolute bottom-0 left-0 right-0 h-[2px]"
+                        style={{
+                          backgroundColor: 'transparent',
+                          opacity: 0,
+                        }}
+                      />
                     </button>
                   ))}
                 </div>
               </div>
 
-              <ul className={`grid grid-cols-2 gap-x-6 gap-y-4 ${tabsHovered ? 'animate-fade-in-up delay-200' : 'opacity-0 pointer-events-none'}`}>
+              <ul
+                ref={listRef}
+                className="grid grid-cols-2 gap-x-6 gap-y-4"
+                style={{
+                  opacity: reveal ? 1 : 0,
+                  transform: reveal ? 'translateY(0)' : 'translateY(6px)',
+                  transition: reveal ? 'opacity 220ms ease-out, transform 220ms ease-out' : 'none',
+                  visibility: reveal ? 'visible' : 'hidden',
+                }}
+                onTransitionEnd={(e) => {
+                  if (!reveal && isSwitching && e.target === e.currentTarget && (e.propertyName === 'opacity' || e.propertyName === 'transform')) {
+                    if (nextTab) {
+                      setActiveTab(nextTab);
+                      setActiveIndex(0);
+                    }
+                    setReveal(true);
+                    setIsSwitching(false);
+                    setNextTab(null);
+                  }
+                }}
+              >
                 {(activeTab === 'owners' ? owners : intermediaries).map((item, idx) => (
-                  <li key={`${activeTab}-${item.title}`} className="flex items-center gap-3">
+                  <li
+                    key={`${activeTab}-${item.title}`}
+                    className="flex items-center gap-3"
+                    style={{
+                      opacity: reveal ? 1 : 0,
+                      transform: reveal ? 'translateY(0)' : 'translateY(6px)',
+                      transition: reveal ? 'opacity 200ms ease-out, transform 200ms ease-out' : 'none',
+                      transitionDelay: reveal ? `${idx * 60}ms` : '0ms',
+                      willChange: 'opacity, transform',
+                      backfaceVisibility: 'hidden',
+                      visibility: reveal ? 'visible' : 'hidden',
+                    }}
+                  >
                     <ArrowRight
                       className={`w-4 h-4 text-[#00FFFF] transition-opacity duration-200 ${activeIndex === idx ? 'opacity-100' : 'opacity-70'}`}
                     />
@@ -148,39 +241,88 @@ export function ValueCreationSection() {
               {(() => {
                 const items = activeTab === 'owners' ? owners : intermediaries;
                 const selected = items[activeIndex];
-                const iconUrl = getIconUrl(selected.title);
+                const iconRaw = getIconRaw(selected.title);
                 return (
                   <div
-                    className={`p-6 md:p-8 rounded-none ${isVisible ? 'animate-fade-in-up delay-300' : ''} md:h-full w-full flex flex-col items-center justify-center`}
+                    className={`p-6 md:p-8 rounded-none md:h-full w-full flex flex-col items-center justify-center`}
                     style={{
-                      background: 'linear-gradient(45deg, rgba(0,255,255,0.08), rgba(255,255,255,0.03) 60%, rgba(255,255,255,0.02))'
+                      background: 'linear-gradient(45deg, rgba(0,255,255,0.08), rgba(255,255,255,0.03) 60%, rgba(255,255,255,0.02))',
+                      opacity: reveal ? 1 : 0,
+                      transform: reveal ? 'translateY(0)' : 'translateY(6px)',
+                      transition: reveal ? 'opacity 160ms ease-out, transform 160ms ease-out' : 'none',
+                      transitionDelay: reveal ? '80ms' : '0ms',
+                      willChange: 'opacity, transform',
+                      backfaceVisibility: 'hidden',
+                      visibility: reveal ? 'visible' : 'hidden',
                     }}
                   >
                     <div className="space-y-4 w-full">
                       <div className="select-none flex items-center justify-center">
-                        {iconUrl ? (
+                        {iconRaw ? (
                           <div
                             key={`${activeTab}-${activeIndex}-icon`}
-                            className="fade-up w-16 h-16 md:w-[120px] md:h-[120px]"
+                            className="w-16 h-16 md:w-[120px] md:h-[120px]"
                             style={{
-                              backgroundColor: '#00FFFF',
-                              WebkitMaskImage: `url(${iconUrl})`,
-                              WebkitMaskRepeat: 'no-repeat',
-                              WebkitMaskPosition: 'center',
-                              WebkitMaskSize: 'contain',
-                              maskImage: `url(${iconUrl})`,
-                              maskRepeat: 'no-repeat',
-                              maskPosition: 'center',
-                              maskSize: 'contain',
+                              color: '#00FFFF',
+                              opacity: reveal ? 1 : 0,
+                              transform: reveal ? 'translateY(0)' : 'translateY(6px)',
+                              transition: reveal ? 'opacity 140ms ease-out, transform 140ms ease-out' : 'none',
+                              transitionDelay: reveal ? '120ms' : '0ms',
+                              willChange: 'opacity, transform',
+                              backfaceVisibility: 'hidden',
+                              visibility: reveal ? 'visible' : 'hidden',
                             }}
-                            aria-label={selected.title}
+                            dangerouslySetInnerHTML={{
+                              __html: iconRaw
+                                .replace('width="24"', 'width="100%"')
+                                .replace('height="24"', 'height="100%"')
+                            }}
                           />
                         ) : (
-                          <ArrowRight className="fade-up w-16 h-16 text-[#00FFFF]" />
+                          <ArrowRight
+                            className="w-16 h-16 text-[#00FFFF]"
+                            style={{
+                              opacity: reveal ? 1 : 0,
+                              transform: reveal ? 'translateY(0)' : 'translateY(6px)',
+                              transition: reveal ? 'opacity 140ms ease-out, transform 140ms ease-out' : 'none',
+                              transitionDelay: reveal ? '120ms' : '0ms',
+                              willChange: 'opacity, transform',
+                              backfaceVisibility: 'hidden',
+                              visibility: reveal ? 'visible' : 'hidden',
+                            }}
+                          />
                         )}
                       </div>
-                      <p key={`${activeTab}-${activeIndex}-title`} className="fade-up text-white text-xl md:text-2xl font-semibold">{selected.title}</p>
-                      <p key={`${activeTab}-${activeIndex}-desc`} className="fade-up text-muted-foreground text-base md:text-lg max-w-md mx-auto leading-relaxed">{selected.desc}</p>
+                      <p
+                        key={`${activeTab}-${activeIndex}-title`}
+                        className="text-white text-xl md:text-2xl font-semibold"
+                        style={{
+                          opacity: reveal ? 1 : 0,
+                          transform: reveal ? 'translateY(0)' : 'translateY(6px)',
+                          transition: reveal ? 'opacity 160ms ease-out, transform 160ms ease-out' : 'none',
+                          transitionDelay: reveal ? '140ms' : '0ms',
+                          willChange: 'opacity, transform',
+                          backfaceVisibility: 'hidden',
+                          visibility: reveal ? 'visible' : 'hidden',
+                        }}
+                      >
+                        {selected.title}
+                      </p>
+                      <p
+                        key={`${activeTab}-${activeIndex}-desc`}
+                        className="text-muted-foreground text-base md:text-lg max-w-md mx-auto leading-relaxed"
+                        style={{
+                          opacity: reveal ? 1 : 0,
+                          transform: reveal ? 'translateY(0)' : 'translateY(6px)',
+                          transition: reveal ? 'opacity 160ms ease-out, transform 160ms ease-out' : 'none',
+                          transitionDelay: reveal ? '160ms' : '0ms',
+                          willChange: 'opacity, transform',
+                          backfaceVisibility: 'hidden',
+                          visibility: reveal ? 'visible' : 'hidden',
+                        }}
+                      >
+                        {selected.desc}
+                      </p>
                     </div>
                   </div>
                 );

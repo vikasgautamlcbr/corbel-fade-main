@@ -82,20 +82,35 @@ export function PortfolioSection() {
     return [...currentInvestments, ...priorInvestments, ...addons];
   };
 
-  return <section id="portfolio" ref={ref} className="relative bg-black overflow-hidden py-16 md:py-24 snap-start">
+  return <section id="portfolio" ref={ref} className="relative bg-black overflow-hidden site-section">
       {/* Background overlay */}
       <div className="absolute inset-0 bg-black" />
       <div className="absolute inset-0 bg-black/30" />
       
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="section-container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left Side - Text Content */}
           <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-            <p className={`font-medium tracking-wider uppercase text-sm mb-4 text-[#00FFFF] ${isVisible ? 'animate-fade-in-up delay-100' : ''}`}>Our Portfolio</p>
-            <h2 className={`text-3xl md:text-4xl font-bold text-white mb-6 ${isVisible ? 'animate-fade-in-up delay-150' : ''}`}>
+            <p
+              className={`section-eyebrow mb-4 transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '100ms' }}
+            >Our Portfolio</p>
+            <h2
+              className={`section-title mb-6 transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '150ms' }}
+            >
               Building Tomorrow's Leaders
             </h2>
-            <p className={`text-muted-foreground text-base md:text-lg leading-relaxed mb-8 hidden lg:block ${isVisible ? 'animate-fade-in-up delay-200' : ''}`}>
+            <p
+              className={`section-body mb-8 hidden lg:block transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '200ms' }}
+            >
               We partner with exceptional B2B software companies to accelerate their growth. 
               Our portfolio spans current investments, successful exits, and strategic add-on acquisitions.
             </p>
@@ -161,7 +176,12 @@ export function PortfolioSection() {
           </div>
 
           {/* Right Side - Three Column Layout (Desktop) / Horizontal Rows (Mobile) */}
-          <div className={`hidden lg:flex justify-center items-stretch gap-2 md:gap-3 h-[500px] transition-all duration-700 ${isVisible ? 'opacity-100 scale-100 animate-fade-in-up delay-250' : 'opacity-0 scale-95'}`}>
+          <div
+            className={`hidden lg:flex justify-center items-stretch gap-2 md:gap-3 h-[500px] transition-all duration-700 ${
+              isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-10'
+            }`}
+            style={{ transitionDelay: '250ms' }}
+          >
             {/* Prior - Left */}
             <LogoColumn title="Prior" companies={priorInvestments} color="primary" direction="up" columnType="prior" hoveredColumn={hoveredColumn} setHoveredColumn={setHoveredColumn} hoveredCompany={hoveredCompany} setHoveredCompany={setHoveredCompany} size="medium" />
             {/* Current - Middle (largest) */}
@@ -171,7 +191,12 @@ export function PortfolioSection() {
           </div>
 
           {/* Mobile Layout - Marquee style continuous scroll */}
-          <div className={`lg:hidden transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 animate-fade-in-up delay-300' : 'opacity-0 translate-y-10'}`}>
+          <div
+            className={`lg:hidden transition-all duration-700 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+            style={{ transitionDelay: '300ms' }}
+          >
             <MobileMarquee companies={getMobileCompanies()} key={mobileFilter || 'all'} />
           </div>
         </div>

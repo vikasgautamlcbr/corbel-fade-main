@@ -41,7 +41,7 @@ export function InvestmentApproachSection() {
   const [activeTab, setActiveTab] = useState<'metrics' | 'characteristics' | 'sectors'>('metrics');
 
   return (
-    <section id="approach" ref={ref} className="relative bg-black overflow-hidden py-16 md:py-24 snap-start">
+    <section id="approach" ref={ref} className="relative bg-black overflow-hidden site-section">
       <div className="absolute inset-0 bg-black" />
       <div className="absolute inset-0 bg-black/30" />
 
@@ -66,14 +66,29 @@ export function InvestmentApproachSection() {
         }
       `}</style>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="section-container relative z-10">
         <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,35%)_minmax(0,65%)] gap-8 items-start">
             <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
               <div className="text-left mb-10">
-                <p className={`font-medium tracking-wider uppercase text-sm mb-4 text-[#00FFFF] ${isVisible ? 'animate-fade-in-up delay-100' : ''}`}>Investment Approach</p>
-                <h2 className={`text-3xl md:text-4xl font-bold text-white mb-6 ${isVisible ? 'animate-fade-in-up delay-150' : ''}`}>Criteria & Process</h2>
-                <p className={`text-muted-foreground text-base md:text-lg max-w-3xl leading-relaxed ${isVisible ? 'animate-fade-in-up delay-200' : ''}`}>
+                <p
+                  className={`section-eyebrow mb-4 transition-all duration-500 ease-out ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionDelay: '100ms' }}
+                >Investment Approach</p>
+                <h2
+                  className={`section-title mb-6 transition-all duration-500 ease-out ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionDelay: '150ms' }}
+                >Criteria & Process</h2>
+                <p
+                  className={`section-body max-w-3xl transition-all duration-500 ease-out ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionDelay: '200ms' }}
+                >
                   We invest in B2B software and software-enabled services companies with durable economics and strong market fit.
                 </p>
               </div>
@@ -81,7 +96,12 @@ export function InvestmentApproachSection() {
             </div>
 
             <div className={`transition-all duration-700 min-w-0 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-              <div className={`${isVisible ? 'animate-fade-in-up delay-300' : ''}`}>
+              <div
+                className={`transition-all duration-500 ease-out ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}
+                style={{ transitionDelay: '300ms' }}
+              >
                 <div className="w-full mb-0 min-w-0">
                   <div className="grid grid-cols-3 gap-2">
                   {[
@@ -110,7 +130,13 @@ export function InvestmentApproachSection() {
                     <p className="text-muted-foreground text-base md:text-lg mb-6 max-w-3xl">Recurring revenue, healthy margins, and clear visibility into sustainable, profitable growth.</p>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-6 justify-items-start">
                       {metrics.map((m, idx) => (
-                        <div key={m.label} className={`text-left ${isVisible ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: `${idx * 80}ms` }}>
+                        <div
+                          key={m.label}
+                          className={`text-left transition-all duration-300 ease-out ${
+                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                          }`}
+                          style={{ transitionDelay: `${idx * 80}ms` }}
+                        >
                           <p className="text-muted-foreground text-xs md:text-sm uppercase tracking-wide">{m.label}</p>
                           <p className="text-white text-lg md:text-xl font-semibold mt-1">{m.value}</p>
                         </div>
@@ -124,7 +150,13 @@ export function InvestmentApproachSection() {
                     <p className="text-muted-foreground text-base md:text-lg mb-6 max-w-3xl">Differentiated businesses with strong leadership, loyal customers, and durable competitive advantages.</p>
                     <div className="flex flex-wrap gap-3 md:gap-4">
                       {characteristics.map((c, idx) => (
-                        <div key={c} className={`w-fit px-4 py-1.5 border border-white/20 text-white/80 text-sm md:text-base rounded-none leading-snug ${isVisible ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: `${idx * 80}ms` }}>
+                        <div
+                          key={c}
+                          className={`w-fit px-4 py-1.5 border border-white/20 text-white/80 text-sm md:text-base rounded-none leading-snug transition-all duration-300 ease-out ${
+                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                          }`}
+                          style={{ transitionDelay: `${idx * 80}ms` }}
+                        >
                           {c}
                         </div>
                       ))}
@@ -137,7 +169,13 @@ export function InvestmentApproachSection() {
                     <p className="text-muted-foreground text-base md:text-lg mb-6 max-w-3xl">B2B software and software-enabled services. Representative sectors include:</p>
                     <div className="flex flex-wrap gap-3 md:gap-4">
                       {sectors.map((s, idx) => (
-                        <div key={s} className={`w-fit px-4 py-1.5 border border-white/20 text-white/80 text-sm md:text-base rounded-none leading-snug ${isVisible ? 'animate-fade-in-up' : ''}`} style={{ animationDelay: `${idx * 70}ms` }}>
+                        <div
+                          key={s}
+                          className={`w-fit px-4 py-1.5 border border-white/20 text-white/80 text-sm md:text-base rounded-none leading-snug transition-all duration-300 ease-out ${
+                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                          }`}
+                          style={{ transitionDelay: `${idx * 70}ms` }}
+                        >
                           {s}
                         </div>
                       ))}
@@ -151,7 +189,12 @@ export function InvestmentApproachSection() {
           </div>
 
           <div className="mt-16">
-            <div className={`w-full ${isVisible ? 'animate-fade-in-up delay-400' : ''}`}>
+            <div
+              className={`w-full transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '400ms' }}
+            >
               <div className="text-left">
                 <h3 className="text-[#00FFFF] text-xl font-semibold mb-3">Quick & Efficient Process</h3>
                 <p className="text-muted-foreground text-base md:text-lg mb-6">

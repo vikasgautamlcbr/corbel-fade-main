@@ -26,20 +26,40 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" ref={ref} className="bg-black py-16 md:py-24 snap-start">
-      <div className="container mx-auto px-6 relative">
+    <section id="contact" ref={ref} className="bg-black site-section">
+      <div className="section-container relative">
         <div
           className={`grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-start transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
           <div className="relative z-10 px-6 md:px-6 space-y-6">
-            <p className={`text-[#00FFFF] font-medium tracking-wider uppercase text-sm ${isVisible ? 'animate-fade-in-up delay-100' : ''}`}>Get in Touch</p>
-            <h2 className={`text-3xl md:text-4xl font-bold text-white ${isVisible ? 'animate-fade-in-up delay-150' : ''}`}>Let's Start a Conversation</h2>
-            <p className={`text-muted-foreground text-base md:text-lg leading-relaxed max-w-3xl ${isVisible ? 'animate-fade-in-up delay-200' : ''}`}>
+            <p
+              className={`section-eyebrow transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '100ms' }}
+            >Get in Touch</p>
+            <h2
+              className={`section-title transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '150ms' }}
+            >Let's Start a Conversation</h2>
+            <p
+              className={`section-body max-w-3xl transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '200ms' }}
+            >
               Whether you're a founder looking for a growth partner or an investor interested in learning more, we'd love to hear from you.
             </p>
-            <div className={`flex items-center gap-4 ${isVisible ? 'animate-fade-in-up delay-250' : ''}`}>
+            <div
+              className={`flex items-center gap-4 transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '250ms' }}
+            >
               <div className="w-12 h-12 bg-[#00FFFF]/15 rounded-none flex items-center justify-center">
                 <Mail className="w-5 h-5 text-[#00FFFF]" />
               </div>
@@ -48,7 +68,12 @@ export function ContactSection() {
                 <p className="text-white text-base">info@softwaregrowthpartners.com</p>
               </div>
             </div>
-            <div className={`flex items-center gap-4 ${isVisible ? 'animate-fade-in-up delay-300' : ''}`}>
+            <div
+              className={`flex items-center gap-4 transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '300ms' }}
+            >
               <div className="w-12 h-12 bg-[#00FFFF]/15 rounded-none flex items-center justify-center">
                 <Phone className="w-5 h-5 text-[#00FFFF]" />
               </div>
@@ -57,7 +82,12 @@ export function ContactSection() {
                 <p className="text-white text-base">+1 (555) 123-4567</p>
               </div>
             </div>
-            <div className={`flex items-center gap-4 ${isVisible ? 'animate-fade-in-up delay-350' : ''}`}>
+            <div
+              className={`flex items-center gap-4 transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '350ms' }}
+            >
               <div className="w-12 h-12 bg-[#00FFFF]/15 rounded-none flex items-center justify-center">
                 <MapPin className="w-5 h-5 text-[#00FFFF]" />
               </div>
@@ -70,7 +100,13 @@ export function ContactSection() {
 
           <div className="relative md:pl-8 md:pr-6 mt-8 md:mt-6">
             <div className="relative w-full">
-              <form onSubmit={handleSubmit} className={`space-y-5 p-0 md:p-0 ${isVisible ? 'animate-fade-in-up delay-400' : ''}`}>
+              <form
+                onSubmit={handleSubmit}
+                className={`space-y-5 p-0 md:p-0 transition-all duration-500 ease-out ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}
+                style={{ transitionDelay: '400ms' }}
+              >
                 <div className="grid md:grid-cols-2 gap-4">
                   <Input
                     placeholder="Your name"
