@@ -4,19 +4,23 @@ import { StatsSection } from '@/components/StatsSection';
 import { AboutSection } from '@/components/AboutSection';
 import { PartnershipSection } from '@/components/PartnershipSection';
 import { PortfolioSection } from '@/components/PortfolioSection';
+import { InvestmentApproachSection } from '@/components/InvestmentApproachSection';
+import { ValueCreationSection } from '@/components/ValueCreationSection';
 import { TeamSection } from '@/components/TeamSection';
 import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-navy overflow-x-hidden">
+    <div className="min-h-screen bg-black overflow-x-hidden">
       <Header />
       <main>
         <HeroSection />
         <StatsSection />
         <AboutSection />
         <PartnershipSection />
+        <InvestmentApproachSection />
+        <ValueCreationSection />
         <PortfolioSection />
         <TeamSection />
         <ContactSection />

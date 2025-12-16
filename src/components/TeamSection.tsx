@@ -83,7 +83,7 @@ function PopCard({
     >
       <div 
         className={`relative overflow-hidden bg-gradient-to-b from-[#0c1c3d] to-[#081428] h-full ${
-          isHovered ? 'shadow-2xl shadow-[#1cc8e0]/30' : ''
+          isHovered ? 'shadow-2xl shadow-[#00FFFF]/30' : ''
         }`}
         style={{
           transition: 'box-shadow 400ms cubic-bezier(0.4, 0, 0.2, 1)',
@@ -94,7 +94,7 @@ function PopCard({
           
           {isHovered && (
             <div className="absolute inset-0 z-20 pointer-events-none">
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1cc8e0]/15 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#00FFFF]/15 to-transparent" />
             </div>
           )}
           
@@ -113,7 +113,7 @@ function PopCard({
             href={member.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute top-3 right-3 z-30 p-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-[#1cc8e0] hover:border-[#1cc8e0]"
+            className="absolute top-3 right-3 z-30 p-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-[#00FFFF] hover:border-[#00FFFF]"
             style={{
               opacity: isHovered ? 1 : 0,
               transition: 'opacity 300ms ease, background-color 200ms ease',
@@ -134,7 +134,7 @@ function PopCard({
               {member.name}
             </h3>
             <p 
-              className="text-[#1cc8e0] font-medium"
+              className="text-[#00FFFF] font-medium"
               style={{
                 fontSize: isHovered ? '0.875rem' : '0.75rem',
                 transition: 'font-size 400ms cubic-bezier(0.4, 0, 0.2, 1)',
@@ -165,21 +165,21 @@ function PopCard({
       <div 
         className="absolute inset-0 border pointer-events-none"
         style={{
-          borderColor: isHovered ? 'rgba(28, 200, 224, 0.5)' : 'rgba(255, 255, 255, 0.1)',
+          borderColor: isHovered ? 'rgba(0, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.1)',
           transition: 'border-color 300ms ease',
         }}
       />
       
       {/* Glow effect when hovered */}
       {isHovered && (
-        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-[#1cc8e0]/30 blur-xl" />
+        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-[#00FFFF]/30 blur-xl" />
       )}
     </div>
   );
 }
 
 export function TeamSection() {
-  const { ref, isVisible } = useScrollAnimation(0.1);
+  const { ref, isVisible } = useScrollAnimation(0.85);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [expandedMobileIndex, setExpandedMobileIndex] = useState<number | null>(null);
 
@@ -187,16 +187,16 @@ export function TeamSection() {
     <section
       id="team"
       ref={ref}
-      className="relative bg-navy py-20 md:py-28 overflow-hidden"
+      className="relative bg-black py-20 md:py-28 overflow-hidden snap-start"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-32 w-64 h-64 bg-[#1cc8e0]/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[#1cc8e0]/3 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 -left-32 w-64 h-64 bg-[#00FFFF]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-[#00FFFF]/3 rounded-full blur-3xl" />
         <div 
           className="absolute inset-0 opacity-[0.03]"
           style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, #1cc8e0 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 1px 1px, #00FFFF 1px, transparent 0)`,
             backgroundSize: '40px 40px',
           }}
         />
@@ -210,13 +210,13 @@ export function TeamSection() {
         >
           {/* Header */}
           <div className="text-center mb-16 px-6">
-            <p className="text-[#1cc8e0] font-medium tracking-wider uppercase text-sm mb-4">
+            <p className="text-[#00FFFF] font-medium tracking-wider uppercase text-sm mb-4">
               The People Behind SGP
             </p>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
               Meet the Team
             </h2>
-            <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
               A diverse team of investors, operators, and technologists united by a shared 
               passion for building exceptional software companies.
             </p>
@@ -245,7 +245,7 @@ export function TeamSection() {
                     <div 
                       key={member.name}
                       className={`relative overflow-hidden bg-gradient-to-b from-[#0c1c3d] to-[#081428] border ${
-                        isExpanded ? 'border-[#1cc8e0]/50 col-span-2' : 'border-white/10'
+                        isExpanded ? 'border-[#00FFFF]/50 col-span-2' : 'border-white/10'
                       }`}
                       style={{
                         transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -254,10 +254,10 @@ export function TeamSection() {
                     >
                       <div className={`flex ${isExpanded ? 'flex-row' : 'flex-col'}`} style={{ transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}>
                         <div 
-                          className={`relative overflow-hidden ${isExpanded ? 'w-1/3 aspect-square' : 'aspect-[3/4]'}`}
-                          style={{ transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#0c1c3d] via-[#0c1c3d]/40 to-transparent z-10" />
+                      className={`relative overflow-hidden ${isExpanded ? 'w-1/3 aspect-square' : 'aspect-[3/4]'}`}
+                      style={{ transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c1c3d] via-[#0c1c3d]/40 to-transparent z-10" />
                           <img
                             src={member.image}
                             alt={member.name}
@@ -275,7 +275,7 @@ export function TeamSection() {
                             }}
                           >
                             <h3 className="font-bold text-white text-xs mb-0.5">{member.name}</h3>
-                            <p className="text-[#1cc8e0] text-[10px] font-medium">{member.role}</p>
+                            <p className="text-[#00FFFF] text-[10px] font-medium">{member.role}</p>
                           </div>
                         </div>
                       
@@ -290,7 +290,7 @@ export function TeamSection() {
                         >
                           <div>
                             <h3 className="font-bold text-white text-base mb-1">{member.name}</h3>
-                            <p className="text-[#1cc8e0] text-sm font-medium mb-3">{member.role}</p>
+                            <p className="text-[#00FFFF] text-sm font-medium mb-3">{member.role}</p>
                             <p className="text-white/70 text-xs leading-relaxed">{member.bio}</p>
                             {member.education && (
                               <p className="text-white/50 text-xs mt-2 italic">{member.education}</p>
@@ -300,7 +300,7 @@ export function TeamSection() {
                             href={member.linkedin}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 mt-3 text-[#1cc8e0] text-xs"
+                            className="inline-flex items-center gap-2 mt-3 text-[#00FFFF] text-xs"
                             onClick={(e) => e.stopPropagation()}
                           >
                             <Linkedin className="w-4 h-4" />

@@ -10,7 +10,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden snap-start bg-black">
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
         <iframe
@@ -21,19 +21,19 @@ export function HeroSection() {
           title="Hero Background - SGP"
         />
         
-        {/* Gradient Overlay - Fades to black at bottom */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#001E22]/90 via-[#001E22]/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#001E22]/30 via-transparent to-black" />
+        {/* Overlays for readability in black */}
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70" />
       </div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 text-center">
         <div className="max-w-3xl mx-auto animate-fade-in-up">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-8 leading-tight">
-            Focus helps us get it right
+            Investing in Teams Building the Future of Software
           </h1>
           
-          <p className="text-base md:text-lg text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
             At SGP, we have aspired to build a different kind of investment firm - One whose primary 
             mission is to build great companies. When we do that, we deliver win-win outcomes for 
             everyone - Company Founders, their Employees, and our Limited Partners.

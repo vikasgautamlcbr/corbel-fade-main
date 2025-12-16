@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 @layer base {
   :root {
@@ -15,7 +15,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 187 100% 7%;
 
-    --primary: 189 79% 49%;
+    --primary: 180 100% 50%;
     --primary-foreground: 187 100% 7%;
 
     --secondary: 187 100% 7%;
@@ -24,7 +24,7 @@
     --muted: 210 20% 96%;
     --muted-foreground: 187 100% 15%;
 
-    --accent: 189 79% 49%;
+    --accent: 180 100% 50%;
     --accent-foreground: 187 100% 7%;
 
     --destructive: 0 84% 60%;
@@ -32,49 +32,52 @@
 
     --border: 210 20% 90%;
     --input: 210 20% 90%;
-    --ring: 189 79% 49%;
+    --ring: 180 100% 50%;
 
     --radius: 0.5rem;
 
     /* Custom colors - exact brand colors */
     --navy: 187 100% 7%;
     --navy-light: 187 100% 15%;
-    --cyan: 189 79% 49%;
+    --cyan: 180 100% 50%;
     --teal: 187 100% 15%;
     --tab-green: 145 60% 45%;
-    --tab-teal: 189 79% 49%;
+    --tab-teal: 180 100% 50%;
     --tab-purple: 280 60% 55%;
     --tab-blue: 220 70% 55%;
   }
 
   .dark {
-    --background: 187 100% 7%;
+    --background: 0 0% 0%;
     --foreground: 0 0% 100%;
 
-    --card: 187 100% 10%;
+    --card: 0 0% 0%;
     --card-foreground: 0 0% 100%;
 
-    --popover: 187 100% 10%;
+    --popover: 0 0% 0%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 189 79% 49%;
+    --primary: 180 100% 50%;
     --primary-foreground: 187 100% 7%;
 
-    --secondary: 187 100% 15%;
+    --secondary: 0 0% 0%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 187 100% 12%;
+    --muted: 0 0% 0%;
     --muted-foreground: 210 15% 65%;
 
-    --accent: 189 79% 49%;
+    --accent: 180 100% 50%;
     --accent-foreground: 187 100% 7%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 187 100% 20%;
-    --input: 187 100% 20%;
-    --ring: 189 79% 49%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 180 100% 50%;
+
+    --navy: 0 0% 0%;
+    --navy-light: 0 0% 0%;
   }
 }
 
@@ -86,6 +89,8 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Corbel', 'Roboto', sans-serif;
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 72px;
   }
 
   html {
@@ -95,7 +100,8 @@
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, hsl(var(--cyan)), hsl(var(--teal)));
   }
 }
 

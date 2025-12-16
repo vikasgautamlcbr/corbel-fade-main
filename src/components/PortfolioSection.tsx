@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 // Import all portfolio logos
@@ -73,7 +73,7 @@ export function PortfolioSection() {
   const {
     ref,
     isVisible
-  } = useScrollAnimation(0.1);
+  } = useScrollAnimation(0.85);
 
   const getMobileCompanies = () => {
     if (mobileFilter === 'current') return currentInvestments;
@@ -82,20 +82,20 @@ export function PortfolioSection() {
     return [...currentInvestments, ...priorInvestments, ...addons];
   };
 
-  return <section id="portfolio" ref={ref} className="relative bg-black overflow-hidden py-16 md:py-24">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-[#0a0a0a] to-[#111111]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30" />
+  return <section id="portfolio" ref={ref} className="relative bg-black overflow-hidden py-16 md:py-24 snap-start">
+      {/* Background overlay */}
+      <div className="absolute inset-0 bg-black" />
+      <div className="absolute inset-0 bg-black/30" />
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left Side - Text Content */}
           <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-            <p className="font-medium tracking-wider uppercase text-sm mb-4 text-[#1cc8e0]">Our Portfolio</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            <p className={`font-medium tracking-wider uppercase text-sm mb-4 text-[#00FFFF] ${isVisible ? 'animate-fade-in-up delay-100' : ''}`}>Our Portfolio</p>
+            <h2 className={`text-3xl md:text-4xl font-bold text-white mb-6 ${isVisible ? 'animate-fade-in-up delay-150' : ''}`}>
               Building Tomorrow's Leaders
             </h2>
-            <p className="text-white/60 text-base md:text-lg leading-relaxed mb-8 hidden lg:block">
+            <p className={`text-muted-foreground text-base md:text-lg leading-relaxed mb-8 hidden lg:block ${isVisible ? 'animate-fade-in-up delay-200' : ''}`}>
               We partner with exceptional B2B software companies to accelerate their growth. 
               Our portfolio spans current investments, successful exits, and strategic add-on acquisitions.
             </p>
@@ -105,7 +105,7 @@ export function PortfolioSection() {
               <div className="flex items-center gap-4 cursor-pointer transition-opacity duration-300 hover:opacity-100" style={{
               opacity: hoveredColumn && hoveredColumn !== 'current' ? 0.5 : 1
             }} onMouseEnter={() => setHoveredColumn('current')} onMouseLeave={() => setHoveredColumn(null)}>
-                <p className="text-3xl font-bold text-[#1cc8e0]">{currentInvestments.length}</p>
+                <p className="text-3xl font-bold text-[#00FFFF]">{currentInvestments.length}</p>
                 <p className="text-white/80 text-lg">Current Investments</p>
               </div>
               <div className="flex items-center gap-4 cursor-pointer transition-opacity duration-300 hover:opacity-100" style={{
@@ -128,7 +128,7 @@ export function PortfolioSection() {
                 onClick={() => setMobileFilter(mobileFilter === 'current' ? null : 'current')}
                 className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-all ${
                   mobileFilter === 'current' 
-                    ? 'bg-[#1cc8e0] text-black' 
+                    ? 'bg-[#00FFFF] text-black' 
                     : 'bg-white/10 text-white/80 border border-white/20'
                 }`}
               >
@@ -161,7 +161,7 @@ export function PortfolioSection() {
           </div>
 
           {/* Right Side - Three Column Layout (Desktop) / Horizontal Rows (Mobile) */}
-          <div className={`hidden lg:flex justify-center items-stretch gap-2 md:gap-3 h-[500px] transition-all duration-700 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+          <div className={`hidden lg:flex justify-center items-stretch gap-2 md:gap-3 h-[500px] transition-all duration-700 ${isVisible ? 'opacity-100 scale-100 animate-fade-in-up delay-250' : 'opacity-0 scale-95'}`}>
             {/* Prior - Left */}
             <LogoColumn title="Prior" companies={priorInvestments} color="primary" direction="up" columnType="prior" hoveredColumn={hoveredColumn} setHoveredColumn={setHoveredColumn} hoveredCompany={hoveredCompany} setHoveredCompany={setHoveredCompany} size="medium" />
             {/* Current - Middle (largest) */}
@@ -171,7 +171,7 @@ export function PortfolioSection() {
           </div>
 
           {/* Mobile Layout - Marquee style continuous scroll */}
-          <div className={`lg:hidden transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className={`lg:hidden transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0 animate-fade-in-up delay-300' : 'opacity-0 translate-y-10'}`}>
             <MobileMarquee companies={getMobileCompanies()} key={mobileFilter || 'all'} />
           </div>
         </div>
@@ -205,8 +205,8 @@ function LogoColumn({
   const isOtherHovered = hoveredColumn !== null && hoveredColumn !== columnType;
   const colorClasses = {
     teal: {
-      text: 'text-[#1cc8e0]',
-      glow: 'shadow-[0_0_40px_rgba(28,200,224,0.5)]'
+      text: 'text-[#00FFFF]',
+      glow: 'shadow-[0_0_40px_rgba(0,255,255,0.5)]'
     },
     primary: {
       text: 'text-white',
@@ -224,10 +224,28 @@ function LogoColumn({
   };
   const styles = colorClasses[color];
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
+  const [tooltipSide, setTooltipSide] = useState<'left' | 'right'>(columnType === 'addon' ? 'left' : 'right');
+
+  useEffect(() => {
+    if (!hoveredCompany || !isHovered) return;
+    const el = tooltipRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const margin = 4;
+    if (rect.right > vw - margin) {
+      setTooltipSide('left');
+    } else if (rect.left < margin) {
+      setTooltipSide('right');
+    }
+  }, [hoveredCompany, isHovered]);
+
   // Create duplicated companies for scrolling effect
   const duplicatedCompanies = [...companies, ...companies, ...companies];
   
-  return <div className={`relative flex flex-col h-full
+  return <div ref={containerRef} className={`relative flex flex-col h-full
         ${sizeClasses[size]}
         ${isHovered ? `scale-105 z-10 ${styles.glow}` : 'scale-100'}
         ${isOtherHovered ? 'opacity-40 scale-95' : 'opacity-100'}
@@ -268,7 +286,7 @@ function LogoColumn({
 
       {/* Tooltip - rendered outside overflow container */}
       {hoveredCompany && isHovered && (
-        <div className="absolute left-full top-1/2 -translate-y-1/2 ml-4 z-50 animate-fade-in pointer-events-none">
+        <div ref={tooltipRef} className={`absolute top-1/2 -translate-y-1/2 ${tooltipSide === 'left' ? 'right-full mr-4' : 'left-full ml-4'} z-50 animate-fade-in pointer-events-none`}>
           <div className="bg-black border border-white/30 rounded-lg px-4 py-3 whitespace-nowrap shadow-2xl">
             <p className="text-white font-semibold text-sm">{hoveredCompany.name}</p>
             <p className="text-white/70 text-xs mt-1">{hoveredCompany.tagline}</p>
