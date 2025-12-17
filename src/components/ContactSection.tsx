@@ -33,7 +33,7 @@ export function ContactSection() {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
-          <div className="relative z-10 px-6 md:px-6 space-y-6">
+          <div className="relative z-10 px-0 md:px-6 space-y-6">
             <p
               className={`section-eyebrow transition-all duration-500 ease-out ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
@@ -55,13 +55,13 @@ export function ContactSection() {
               Whether you're a founder looking for a growth partner or an investor interested in learning more, we'd love to hear from you.
             </p>
             <div
-              className={`flex items-center gap-4 transition-all duration-500 ease-out ${
+              className={`flex items-center gap-3 md:gap-4 transition-all duration-500 ease-out ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
               style={{ transitionDelay: '250ms' }}
             >
-              <div className="w-12 h-12 bg-[#00FFFF]/15 rounded-none flex items-center justify-center">
-                <Mail className="w-5 h-5 text-[#00FFFF]" />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-[#00FFFF]/15 rounded-none flex items-center justify-center">
+                <Mail className="w-6 h-6 md:w-5 md:h-5 text-[#00FFFF]" />
               </div>
               <div>
                 <p className="text-muted-foreground text-sm">Email</p>
@@ -69,13 +69,13 @@ export function ContactSection() {
               </div>
             </div>
             <div
-              className={`flex items-center gap-4 transition-all duration-500 ease-out ${
+              className={`flex items-center gap-3 md:gap-4 transition-all duration-500 ease-out ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
               style={{ transitionDelay: '300ms' }}
             >
-              <div className="w-12 h-12 bg-[#00FFFF]/15 rounded-none flex items-center justify-center">
-                <Phone className="w-5 h-5 text-[#00FFFF]" />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-[#00FFFF]/15 rounded-none flex items-center justify-center">
+                <Phone className="w-6 h-6 md:w-5 md:h-5 text-[#00FFFF]" />
               </div>
               <div>
                 <p className="text-muted-foreground text-sm">Phone</p>
@@ -83,13 +83,13 @@ export function ContactSection() {
               </div>
             </div>
             <div
-              className={`flex items-center gap-4 transition-all duration-500 ease-out ${
+              className={`flex items-center gap-3 md:gap-4 transition-all duration-500 ease-out ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
               style={{ transitionDelay: '350ms' }}
             >
-              <div className="w-12 h-12 bg-[#00FFFF]/15 rounded-none flex items-center justify-center">
-                <MapPin className="w-5 h-5 text-[#00FFFF]" />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-[#00FFFF]/15 rounded-none flex items-center justify-center">
+                <MapPin className="w-6 h-6 md:w-5 md:h-5 text-[#00FFFF]" />
               </div>
               <div>
                 <p className="text-muted-foreground text-sm">Headquarters</p>
