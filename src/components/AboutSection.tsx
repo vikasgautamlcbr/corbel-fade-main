@@ -57,16 +57,15 @@ const ExpandablePanels = () => {
         >
           {activeIndex === index && (
             <div
-              className="absolute -left-20 top-1/2 -translate-y-1/2 w-40 h-40 rounded-full blur-[80px]"
-              style={{ backgroundColor: 'hsl(var(--cyan) / 0.2)' }}
+              className="absolute inset-0 pointer-events-none"
+              style={{ backgroundImage: 'linear-gradient(to right, hsl(var(--cyan) / 0.12), hsl(var(--cyan) / 0.05), transparent)' }}
             />
           )}
-
-          <div className="relative z-10 flex items-center justify-between px-4 md:px-12 py-8">
-            <div className="flex items-center gap-8 md:gap-16">
+          <div className="relative z-10 flex items-center justify-between px-0 md:px-12 py-6 md:py-8">
+            <div className="flex items-center gap-0 md:gap-16">
               <span
                 className={cn(
-                  'inline-block w-16 md:w-24 text-right text-5xl md:text-6xl font-extralight transition-colors duration-500',
+                  'hidden md:inline-block w-16 md:w-24 text-right text-5xl md:text-6xl font-extralight transition-colors duration-500',
                   activeIndex === index ? 'text-[hsl(var(--cyan))]' : 'text-gray-700',
                 )}
               >
@@ -95,7 +94,7 @@ const ExpandablePanels = () => {
 
             <ArrowRight
               className={cn(
-                'w-6 h-6 transition-all duration-500',
+                'w-6 h-6 transition-all duration-500 hidden md:block',
                 activeIndex === index ? 'text-[hsl(var(--cyan))] translate-x-0 opacity-100' : 'text-gray-500 translate-x-0 opacity-100',
               )}
             />
@@ -104,7 +103,7 @@ const ExpandablePanels = () => {
           <div
             className={cn('overflow-hidden transition-all duration-700 ease-out', activeIndex === index ? 'max-h-60 md:max-h-48' : 'max-h-0')}
           >
-            <div className="pr-4 md:pr-12 pb-8 pl-4 md:pl-52">
+            <div className="pr-0 md:pr-12 pb-6 md:pb-8 pl-0 md:pl-52">
               <p className="text-gray-400 text-sm md:text-lg leading-relaxed max-w-full md:max-w-3xl">{item.content}</p>
             </div>
           </div>
@@ -115,7 +114,7 @@ const ExpandablePanels = () => {
               style={{ backgroundImage: 'linear-gradient(to right, hsl(var(--cyan)), hsl(var(--cyan) / 0.5), transparent)' }}
             />
           ) : (
-            <div className="absolute bottom-0 left-0 h-px w-1/3 bg-gradient-to-r from-gray-800 to-transparent transition-all duration-500" />
+            <div className="absolute bottom-0 left-0 h-px w-full md:w-1/3 bg-gradient-to-r from-gray-800 to-transparent transition-all duration-500" />
           )}
         </div>
       ))}
@@ -171,7 +170,9 @@ export function AboutSection() {
             }`}
             style={{ transitionDelay: '250ms' }}
           >
-            <ExpandablePanels />
+            <div className="-mx-6 md:mx-0">
+              <ExpandablePanels />
+            </div>
           </div>
         </div>
 

@@ -41,11 +41,12 @@ export function InvestmentApproachSection() {
   const [activeTab, setActiveTab] = useState<'metrics' | 'characteristics' | 'sectors'>('metrics');
   const boxRef = useRef<HTMLDivElement>(null);
   const [mobileScale, setMobileScale] = useState(2);
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 1024 : true);
+  const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
+    const mq = typeof window !== 'undefined' ? window.matchMedia('(max-width: 1024px)') : null;
     const update = () => {
-      setIsMobile(window.innerWidth < 1024);
+      setIsMobile(mq ? mq.matches : true);
       const el = boxRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
@@ -57,7 +58,11 @@ export function InvestmentApproachSection() {
     };
     update();
     window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+    mq?.addEventListener('change', update);
+    return () => {
+      window.removeEventListener('resize', update);
+      mq?.removeEventListener('change', update);
+    };
   }, []);
 
   return (
@@ -87,26 +92,20 @@ export function InvestmentApproachSection() {
       `}</style>
 
       <div className="section-container relative z-10">
-        <div className={`transition-all duration-700 ${(isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`transition-all duration-700 opacity-100 translate-y-0`}>
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,35%)_minmax(0,65%)] gap-8 items-start">
-            <div className={`transition-all duration-700 ${(isVisible || isMobile) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+            <div className={`transition-all duration-700 opacity-100 translate-x-0`}>
               <div className="text-left mb-10">
                 <p
-                  className={`section-eyebrow mb-4 transition-all duration-500 ease-out ${
-                    (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                  }`}
+                  className={`section-eyebrow mb-4 transition-all duration-500 ease-out opacity-100 translate-y-0`}
                   style={{ transitionDelay: '100ms' }}
                 >Investment Approach</p>
                 <h2
-                  className={`section-title mb-6 transition-all duration-500 ease-out ${
-                    (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                  }`}
+                  className={`section-title mb-6 transition-all duration-500 ease-out opacity-100 translate-y-0`}
                   style={{ transitionDelay: '150ms' }}
                 >Criteria & Process</h2>
                 <p
-                  className={`section-body max-w-3xl transition-all duration-500 ease-out ${
-                    (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                  }`}
+                  className={`section-body max-w-3xl transition-all duration-500 ease-out opacity-100 translate-y-0`}
                   style={{ transitionDelay: '200ms' }}
                 >
                   We invest in B2B software and software-enabled services companies with durable economics and strong market fit.
@@ -115,11 +114,9 @@ export function InvestmentApproachSection() {
               
             </div>
 
-            <div className={`transition-all duration-700 min-w-0 ${(isVisible || isMobile) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+            <div className={`transition-all duration-700 min-w-0 opacity-100 translate-x-0`}>
               <div
-                className={`transition-all duration-500 ease-out ${
-                  (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                }`}
+                className={`transition-all duration-500 ease-out opacity-100 translate-y-0`}
                 style={{ transitionDelay: '300ms' }}
               >
                 <div className="w-full mb-0 min-w-0">
@@ -154,9 +151,7 @@ export function InvestmentApproachSection() {
                       {metrics.map((m, idx) => (
                         <div
                           key={m.label}
-                          className={`text-left transition-all duration-300 ease-out ${
-                            (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-                          }`}
+                          className={`text-left transition-all duration-300 ease-out opacity-100 translate-y-0`}
                           style={{ transitionDelay: `${idx * 80}ms` }}
                         >
                           <p className="text-muted-foreground text-xs md:text-sm uppercase tracking-wide">{m.label}</p>
@@ -174,9 +169,7 @@ export function InvestmentApproachSection() {
                       {characteristics.map((c, idx) => (
                         <div
                           key={c}
-                          className={`w-fit px-4 py-1.5 border border-white/20 text-white/80 text-sm md:text-base rounded-none leading-snug transition-all duration-300 ease-out ${
-                            (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-                          }`}
+                          className={`w-fit px-4 py-1.5 border border-white/20 text-white/80 text-sm md:text-base rounded-none leading-snug transition-all duration-300 ease-out opacity-100 translate-y-0`}
                           style={{ transitionDelay: `${idx * 80}ms` }}
                         >
                           {c}
@@ -193,9 +186,7 @@ export function InvestmentApproachSection() {
                       {sectors.map((s, idx) => (
                         <div
                           key={s}
-                          className={`w-fit px-4 py-1.5 border border-white/20 text-white/80 text-sm md:text-base rounded-none leading-snug transition-all duration-300 ease-out ${
-                            (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-                          }`}
+                          className={`w-fit px-4 py-1.5 border border-white/20 text-white/80 text-sm md:text-base rounded-none leading-snug transition-all duration-300 ease-out opacity-100 translate-y-0`}
                           style={{ transitionDelay: `${idx * 70}ms` }}
                         >
                           {s}
@@ -212,9 +203,7 @@ export function InvestmentApproachSection() {
 
           <div className="mt-16">
             <div
-              className={`w-full transition-all duration-500 ease-out ${
-                (isVisible || isMobile) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
+              className={`w-full transition-all duration-500 ease-out opacity-100 translate-y-0`}
               style={{ transitionDelay: '400ms' }}
             >
               <div className="text-left">
