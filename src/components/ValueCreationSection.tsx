@@ -1,6 +1,6 @@
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { ArrowRight } from 'lucide-react';
-import { useMemo, useState, useRef } from 'react';
+import { useMemo, useState, useRef, useEffect } from 'react';
 
 const owners = [
   {
@@ -65,6 +65,17 @@ export function ValueCreationSection() {
   const listRef = useRef<HTMLUListElement>(null);
   const [isSwitching, setIsSwitching] = useState(false);
   const [nextTab, setNextTab] = useState<'owners' | 'intermediaries' | null>(null);
+  const [isHoverable, setIsHoverable] = useState(true);
+
+  useEffect(() => {
+    const mq = typeof window !== 'undefined' ? window.matchMedia('(hover: hover) and (pointer: fine)') : null;
+    const update = () => setIsHoverable(mq ? mq.matches : true);
+    update();
+    mq?.addEventListener('change', update);
+    return () => {
+      mq?.removeEventListener('change', update);
+    };
+  }, []);
 
   const icons = useMemo(() => {
     return import.meta.glob('/src/assets/icons/*.svg', { eager: true, as: 'raw' }) as Record<string, string>;
@@ -139,7 +150,7 @@ export function ValueCreationSection() {
                   ].map((tab) => (
                     <button
                       key={tab.id}
-                      onMouseEnter={() => {
+                      onMouseEnter={isHoverable ? () => {
                         const next = tab.id as 'owners' | 'intermediaries';
                         if (next === activeTab || isSwitching) return;
                         setTabsHovered(true);
@@ -153,7 +164,7 @@ export function ValueCreationSection() {
                           setIsSwitching(false);
                           setNextTab(null);
                         }, 40);
-                      }}
+                      } : undefined}
                       onClick={() => {
                         const next = tab.id as 'owners' | 'intermediaries';
                         if (next === activeTab || isSwitching) return;
@@ -253,7 +264,7 @@ export function ValueCreationSection() {
                       className={`w-4 h-4 text-[#00FFFF] transition-opacity duration-200 ${activeIndex === idx ? 'opacity-100' : 'opacity-70'}`}
                     />
                     <button
-                      onMouseEnter={() => setActiveIndex(idx)}
+                      onMouseEnter={isHoverable ? () => setActiveIndex(idx) : undefined}
                       onClick={() => setActiveIndex(idx)}
                       onTouchStart={() => setActiveIndex(idx)}
                       className="inline-flex items-center text-left py-1 transition hover:translate-x-0.5 duration-200"

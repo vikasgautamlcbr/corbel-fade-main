@@ -42,6 +42,7 @@ export function InvestmentApproachSection() {
   const boxRef = useRef<HTMLDivElement>(null);
   const [mobileScale, setMobileScale] = useState(2);
   const [isMobile, setIsMobile] = useState(true);
+  const [isHoverable, setIsHoverable] = useState(true);
 
   useEffect(() => {
     const mq = typeof window !== 'undefined' ? window.matchMedia('(max-width: 1024px)') : null;
@@ -62,6 +63,16 @@ export function InvestmentApproachSection() {
     return () => {
       window.removeEventListener('resize', update);
       mq?.removeEventListener('change', update);
+    };
+  }, []);
+
+  useEffect(() => {
+    const hoverMq = typeof window !== 'undefined' ? window.matchMedia('(hover: hover) and (pointer: fine)') : null;
+    const updateHover = () => setIsHoverable(hoverMq ? hoverMq.matches : true);
+    updateHover();
+    hoverMq?.addEventListener('change', updateHover);
+    return () => {
+      hoverMq?.removeEventListener('change', updateHover);
     };
   }, []);
 
@@ -128,7 +139,7 @@ export function InvestmentApproachSection() {
                   ].map((tab) => (
                     <button
                       key={tab.id}
-                      onMouseEnter={() => setActiveTab(tab.id as 'metrics' | 'characteristics' | 'sectors')}
+                      onMouseEnter={isHoverable ? () => setActiveTab(tab.id as 'metrics' | 'characteristics' | 'sectors') : undefined}
                       onClick={() => setActiveTab(tab.id as 'metrics' | 'characteristics' | 'sectors')}
                       onTouchStart={() => setActiveTab(tab.id as 'metrics' | 'characteristics' | 'sectors')}
                       className={`px-3 py-3 text-xs md:text-sm font-medium transition-all rounded-none border ${

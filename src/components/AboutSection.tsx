@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { cn } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
@@ -36,13 +36,24 @@ const items = [
 
 const ExpandablePanels = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isHoverable, setIsHoverable] = useState(true);
+
+  useEffect(() => {
+    const mq = typeof window !== 'undefined' ? window.matchMedia('(hover: hover) and (pointer: fine)') : null;
+    const update = () => setIsHoverable(mq ? mq.matches : true);
+    update();
+    mq?.addEventListener('change', update);
+    return () => {
+      mq?.removeEventListener('change', update);
+    };
+  }, []);
 
   return (
     <div className="space-y-px">
       {items.map((item, index) => (
         <div
           key={item.id}
-          onMouseEnter={() => setActiveIndex(index)}
+          onMouseEnter={isHoverable ? () => setActiveIndex(index) : undefined}
           onClick={() => setActiveIndex(index)}
           onTouchStart={() => setActiveIndex(index)}
           role="button"
@@ -61,7 +72,7 @@ const ExpandablePanels = () => {
               style={{ backgroundImage: 'linear-gradient(to right, hsl(var(--cyan) / 0.12), hsl(var(--cyan) / 0.05), transparent)' }}
             />
           )}
-          <div className="relative z-10 flex items-center justify-between px-0 md:px-12 py-6 md:py-8">
+          <div className="relative z-10 flex items-center justify-between pl-4 pr-0 md:px-12 py-6 md:py-8">
             <div className="flex items-center gap-0 md:gap-16">
               <span
                 className={cn(
@@ -103,7 +114,7 @@ const ExpandablePanels = () => {
           <div
             className={cn('overflow-hidden transition-all duration-700 ease-out', activeIndex === index ? 'max-h-60 md:max-h-48' : 'max-h-0')}
           >
-            <div className="pr-0 md:pr-12 pb-6 md:pb-8 pl-0 md:pl-52">
+            <div className="pr-0 md:pr-12 pb-6 md:pb-8 pl-4 md:pl-52">
               <p className="text-gray-400 text-sm md:text-lg leading-relaxed max-w-full md:max-w-3xl">{item.content}</p>
             </div>
           </div>
